@@ -20,8 +20,10 @@ load('trips.RData')
 ########################################
 
 # plot the distribution of trip times across all rides
+ggplot(data=trips, mapping=aes(x=starttime)) + geom_histogram(;)
 
 # plot the distribution of trip times by rider type
+ggplot(data=trips, mapping=aes(x=starttime, color = usertype )) + geom_histogram()
 
 # plot the number of trips over each day
 
