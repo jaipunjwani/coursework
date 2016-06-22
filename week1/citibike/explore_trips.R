@@ -26,7 +26,9 @@ rbind(trips_start, trips_end) %>% distinct()
 trips %>% count(gender)
 
 # find the 10 most frequent station-to-station trips
-trips %>% mutate(station_to_station = paste(start_station_name, end_station_name))  %>% count(station_to_station) %>% arrange(desc(n)) %>% head(n=10) #note - station id easier to see, and find with single space delimiter
+trips %>% mutate(station_to_station = paste(start_station_name, end_station_name))  %>% count(station_to_station) %>% arrange(desc(n)) %>% head(n=10) 
+#alternate solution
+trips %>% group_by(start_station_name, end_station_name) %>% count(start_station_name, end_station_name)%>% arrange(desc(n)) %>% head(10) 
 
 # count all trips that start and end on broadway
 filter(trips, (grepl('Broadway', start_station_name)) & (grepl('Broadway', end_station_name))) %>% select(start_station_name, end_station_name) %>% count()

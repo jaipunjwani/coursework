@@ -22,14 +22,17 @@ load('trips.RData')
 ########################################
 
 # plot the distribution of trip times across all rides
-ggplot(data=trips, mapping=aes(x=starttime)) + geom_histogram(;)
+ggplot(data=trips, mapping=aes(x=tripduration)) + geom_histogram() + xlim(0,3600)
 
 # plot the distribution of trip times by rider type
-ggplot(data=trips, mapping=aes(x=starttime, color = usertype )) + geom_histogram()
+ggplot(data=trips, mapping=aes(x=tripduration, color = usertype )) + geom_histogram()+ xlim(0,3600)
 
 # plot the number of trips over each day
+ggplot(data=trips, mapping=aes(x=ymd)) + geom_histogram()+ xlim(0,3600)
 
 # plot the number of trips by gender and age
+df = trips %>% group_by(gender, birth_year) %>% summarize(count = n())
+ggplot(data = df, mapping = aes(x=birth_year, y= count, color = as.factor(gender)))  + geom_point() + ylim(0,2e+05) + xlim(1925,2000) + ylab("Trips")
 
 # plot the ratio of male to female trips by age
 # hint: use the spread() function to reshape things to make it easier to compute this ratio
