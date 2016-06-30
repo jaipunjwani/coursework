@@ -1,3 +1,11 @@
+#parameters:
+#data - data frame used to train/test model
+#formula - character string of entire formula (i.e. numtrips ~ tmax + weekend)
+#folds - number of folds to perform (usually 5 or 10?)
+#y - dependent variable (i.e. numtrips)
+
+
+#run this to create function in environment
 kfoldcv = function(data, formula, folds, y)
 {
   #randomly shuffle data
@@ -36,8 +44,8 @@ kfoldcv = function(data, formula, folds, y)
     
   }
   
+  #return vector with average rsquared, average rmse, and standard error
   c(mean(rsquared),mean(rmse), sd(rmse)/(sqrt(folds))
-  
   
 }
 
