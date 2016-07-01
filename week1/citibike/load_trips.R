@@ -2,8 +2,8 @@ library(dplyr)
 library(readr)
 
 # define a function to turn strings into datetimes
-parse_datetime <- function(s, format="%Y-%m-%d %H:%M:%S") {
-  as.POSIXct(as.character(s), format=format)
+parse_datetime <- function(s, format="%Y-%m-%d %H:%M") {
+ as.POSIXct(as.character(s), format=format)
 }
 
 ########################################
@@ -11,7 +11,7 @@ parse_datetime <- function(s, format="%Y-%m-%d %H:%M:%S") {
 ########################################
 
 # load each month of the trip data into one big data frame
-csvs <- Sys.glob('*-tripdata.csv')
+csvs <- Sys.glob('2015*-tripdata.csv')
 trips <- data.frame()
 for (csv in csvs) {
   print(csv)
@@ -21,8 +21,8 @@ for (csv in csvs) {
   # so manually convert the date from a string to a datetime
   if (typeof(tmp$starttime) == "character")
     tmp <- mutate(tmp,
-                  starttime=parse_datetime(starttime, "%m/%d/%Y %H:%M:%S"),
-                  stoptime=parse_datetime(stoptime, "%m/%d/%Y %H:%M:%S"))
+                  starttime=parse_datetime(starttime, "%m/%d/%Y %H:%M"), #seconds %S was no longer needed
+                  stoptime=parse_datetime(stoptime, "%m/%d/%Y %H:%M"))
 
   trips <- rbind(trips, tmp)
 }
@@ -32,7 +32,7 @@ names(trips) <- gsub(' ', '_', names(trips))
 
 # add a column for year/month/day (without time of day)
 trips <- mutate(trips, ymd=as.Date(starttime))
-
+tmp = mutate(tmp, ymd=as.Date(starttime))
 # recode gender as a factor 0->"Unknown", 1->"Male", 2->"Female"
 trips <- mutate(trips, gender=factor(gender, levels=c(0,1,2), labels=c("Unknown","Male","Female")))
 

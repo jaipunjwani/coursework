@@ -20,9 +20,8 @@ df = weather_2015 %>% select(ymd, tmax, tmin,  prcp)
 holidays15 = as.Date(c("2015-01-01", "2015-01-19", "2015-02-16", "2015-05-25", "2015-07-03", "2015-09-07", "2015-10-12", "2015-11-11", "2015-11-26", "2015-12-25"))
 
 #SET WD to source directory, so these functions can run
-source("is_weekend.R")
-source("cv-kfold.R")
-source("season_function.R")
+source("C:/Users/Jai Punjwani/Desktop/coursework/week2/is_weekend.R")
+source("C:/Users/Jai Punjwani/Desktop/coursework/week2/season_function.R")
 
 df$holiday = df$ymd %in% holidays15
 df = df %>% mutate(tavg = (tmax+tmin)/2, weekend = is_weekend(ymd), rainy = prcp>0.3, season=season(ymd), weekday = !weekend)
